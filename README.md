@@ -1,2 +1,2 @@
-# hexo-zhaoyangmushiyi
-zhaoyangmushiyi.github.io
+# zhaoyangmushiyi.github.io
+http://zhaoyangmushiyi.github.io/
