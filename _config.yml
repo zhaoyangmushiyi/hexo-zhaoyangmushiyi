@@ -5,11 +5,11 @@
 # Site
 title: 朝阳暮逝忆
 subtitle:
-description:
+description: Monochrome
 keywords:
 author: 朝阳暮逝忆
 language: zh-Hans
-timezone:
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -81,3 +81,4 @@ deploy:
   type: git
   repo: git@github.com:zhaoyangmushiyi/zhaoyangmushiyi.github.io
   branch: master
+  message: 
