@@ -2,6 +2,9 @@
 title: IntelliJ IDEA 快捷键
 date: 2018-11-23 11:02:29
 tags: 
+    - IDEA
+categories:
+    - IDEA
 ---
 ### Idea快捷键
 #### 一、跳转
