@@ -9,7 +9,7 @@ categories:
     - Effective Java
     - chapter 1
 ---
-## 引言
+
 这本书的目的是帮助你高效地使用java这门编程语言和它的基本类库：java.lang ,  java.util, and java.io
 和这些包子包下的：java.util.concurrent 和java.util.function 。其它的类库也会时不时地被讨论到。
 
@@ -83,5 +83,6 @@ categories:
 
 类、接口、构造函数、成员和序列化形式统称为API元素。
 一个暴露出来的API是由可以在定义该API的包外访问到的API元素组成。这些API元素可以给任意客户端使用，并且API的作者提供支持。不凑巧的是，它们也是Javadoc实用程序在其默认的操作模式中生成文档的元素。宽泛地说，一个包的对外API由公共和受保护的成员和包中的每个公共类或接口的构造函数组成。
-在Java9中，模块系统被添加到平台里。如果一个库使用了模块系统，它对外的API是该模块系统声明对外包下的对外API的联和。
+在Java9中，模块系统被添加到平台里。如果一个库使用了模块系统，它对外的API是该模块系统声明对外包下的对外API的联和。  
+最后，提供一下[Effective Java源码](https://github.com/jbloch/effective-java-3e-source-code)
 
