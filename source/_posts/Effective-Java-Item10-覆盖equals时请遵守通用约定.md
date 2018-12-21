@@ -29,12 +29,12 @@ categories:
 
 - **类是私有的或是包级私有的，可以确定它的`equals`方法永远不会被调用**。在这种情况下，无疑是应该覆盖`equals`方法的，以防它被意外调用：
 
-``` java
-@Override 
-public boolean equals(Object o) {
-    throw new AssertionError(); // Method is never called
-}
-```
+    ``` java
+    @Override 
+    public boolean equals(Object o) {
+        throw new AssertionError(); // Method is never called
+    }
+    ```
 
 那么，什么时候应该覆盖`Object.equals`呢？如果类具有自己特有的“逻辑相等”概念（不同于对象等同的概念),而且超类还没有覆盖`equals`以实现期望的行为。这时我们就需要覆盖`equals`方法。这通常属于“值类（`value class`）”的情形。值类仅仅是一个表示值的类，例如`Integer`或者`Date`。程序员在利用`equals`方法来比较对象的引用时，希望知道它们在逻辑上是否相等，而不是想了解它们是否指向同一个对象。为了满足程序员的要求，不仅必需覆盖`equals`方法，而且这样做也使得这个类的实例可以被用做映射表(`map`)的键(`key`)，或者集合（`set`）的元素，使映射或者集合表现出预期的行为。
 
@@ -53,11 +53,12 @@ public boolean equals(Object o) {
 所用的信息没有被修改多次调用`x.equals(y)`就会一致地返回`true`，或者一致地返回`false`。
 - 对于任何非`null`的引用值x，`x.equals(null)`必须返回`false`。
 
-除非你对数学特别感兴，否则这些规定看起来可能有点让人感到恐惧，但是绝对不要忽视这些规定！如果你违反了它们，就会发现你的程序将会表现不正常，甚至崩溃，而且很难找到失败的根源。用John Donne的话说，没有哪个类是孤立的。一个类的实例通常会被频繁地传递给另一个类的实例。有许多类，包括所有的集合类（`collection class`)在内，都依赖于传递给它们的对象是否遵守了`equals`约定。
+    除非你对数学特别感兴，否则这些规定看起来可能有点让人感到恐惧，但是绝对不要忽视这些规定！如果你违反了它们，就会发现你的程序将会表现不正常，甚至崩溃，而且很难找到失败的根源。用John Donne的话说，没有哪个类是孤立的。一个类的实例通常会被频繁地传递给另一个类的实例。有许多类，包括所有的集合类（`collection class`)在内，都依赖于传递给它们的对象是否遵守了`equals`约定。
 
 现在你已经知道了违反`equals`约定有多么可怕，现在我们就来更细致地讨论这些约定。值得欣慰的是，这些约定虽然看起来很吓人，实际上并不十分复杂。一旦理解了这些约定，要遵守它们并不困难。现在我们按照顺序逐一查看以下5个要求：
 
 **自反性（`reflexivity`)**——第一个要求仅仅说明对象必须等于其自身。很难想像会无意识地违反这一条。假如违背了这一条，然后把该类的实例添加到集合(`collection`)中，该集合的`contain`方法将果断地告诉你，该集合不包含你刚刚添加的实例。
+
 **对称性(`symmetry`)**——第二个要求是说，任何两个对象对于“它们是否相等”的问题都必须保持一致。与第一个要求不同，若无意中违反这一条，这种情形倒是不难想像。例如，考虑下面的类，它实现了一个区分大小写的字符串。字符串由`toString`保存，但在比较操作中被忽略。
 
 ``` java CaseInsensitiveString.java
@@ -289,30 +290,30 @@ public class ColorPoint {
 
 - 一致性(`consistency`)——`equals`约定的第四个要求是，如果两个对象相等，它们就必须始终保持相等，除非它们中有一个对象（或者两个都）被修改了。换句话说，可变对象在不同的时候可以与不同的对象相等，而不可变对象则不会这样。当你在写一个类的时候，应该仔细考虑它是否应该是不可变的（Item 17）。如果认为它应该是不可变的，就必须保证`equals`方法满足这样的限制条件：相等的对象永远相等，不相等的对象永远不相等。
 
-无论类是否是不可变的，都不要使`equals`方法依赖于不可靠的资源。如果违反了这条禁令，要想满足一致性的要求就十分困难了。例如，`java.net.URL`的`equals`方法依赖于对URL中主机IP地址的比较。将一个主机名转变成IP地址可能需要访问网络，随着时间的推移，不确保会产生相同的结果．这样会导致URL的`equals`方法违反`equals`约定，在实践中有可能引发一些问题。（遗憾的是，因为兼容性的要求，这一行为无法被改变。）除了极少数的例外情况，`equals`方法都应该对驻留在内存中的对象执行确定性的计算。
+    无论类是否是不可变的，都不要使`equals`方法依赖于不可靠的资源。如果违反了这条禁令，要想满足一致性的要求就十分困难了。例如，`java.net.URL`的`equals`方法依赖于对URL中主机IP地址的比较。将一个主机名转变成IP地址可能需要访问网络，随着时间的推移，不确保会产生相同的结果．这样会导致URL的`equals`方法违反`equals`约定，在实践中有可能引发一些问题。（遗憾的是，因为兼容性的要求，这一行为无法被改变。）除了极少数的例外情况，`equals`方法都应该对驻留在内存中的对象执行确定性的计算。
 
 - 非空性(`Non-nullity`)——最后一个要求没有名称，我姑且称它为“非空性(`Non-nullity`)”，意思是指所有的对象都必须不等于`null`。尽管很难想像什么情况下`o.equals(null)`调用会意外地返回`true`，但是意外抛出`NullPointerException`异常的情形却不难想像。通用约定不允许抛出`NullPointerException`异常。许多类的`equals`方法都通过一个显式的null测试来防止这种情况:
-``` java
-@Override public boolean equals(Object o) {
-    `if (o == null)
-        return false;
-    ...
-}
-```
+    ``` java
+    @Override public boolean equals(Object o) {
+        `if (o == null)
+            return false;
+        ...
+    }
+    ```
 
-这项测试是不必要的。为了测试其参数的等同性，`equals`方法必须先把参数转换成适当的类型，以便可以调用它的访问方法(`accessor`),或者访问它的域。在进行转换之前，`equals`方法必须使用`instanceof`操作符，检查其参数是否为正确的类型：
-``` java
-@Override public boolean equals(Object o) {
-    if (!(o instanceof MyType))
-        return false;
-    MyType mt = (MyType) o;
-    ...
-}
-```
+    这项测试是不必要的。为了测试其参数的等同性，`equals`方法必须先把参数转换成适当的类型，以便可以调用它的访问方法(`accessor`),或者访问它的域。在进行转换之前，`equals`方法必须使用`instanceof`操作符，检查其参数是否为正确的类型：
+    ``` java
+    @Override public boolean equals(Object o) {
+        if (!(o instanceof MyType))
+            return false;
+        MyType mt = (MyType) o;
+        ...
+    }
+    ```
 
-如果漏掉了这一步的类型检查，并且传递给`equals`方法的参数又是错误的类型，那么`equals`方法将会抛出`ClassCastException`异常，这就违反了`equals`的约定但是，如果`instanceof`的第一个操作数为`null`，那么，不管第二个操作数是哪种类型，`instanceof`操作符都指定应该返回`false`[JLS, 15.20.2]。因此，如果把`null`传给`equals`方法，类型检查就会返回`false`，所以不需要单独的`null`检查。
-
-结合所有这些要求，得出了以下实现高质量`equals`方法的诀窍：
+    如果漏掉了这一步的类型检查，并且传递给`equals`方法的参数又是错误的类型，那么`equals`方法将会抛出`ClassCastException`异常，这就违反了`equals`的约定但是，如果`instanceof`的第一个操作数为`null`，那么，不管第二个操作数是哪种类型，`instanceof`操作符都指定应该返回`false`[JLS, 15.20.2]。因此，如果把`null`传给`equals`方法，类型检查就会返回`false`，所以不需要单独的`null`检查。
+    
+    结合所有这些要求，得出了以下实现高质量`equals`方法的诀窍：
 
 1．**使用==操作符检查“参數是否为这个对象的引用”**。如果是，则返回`true`。这只不过是一种性能优化，如果比较操作有可能很昂贵，就值得这么做。
 
@@ -372,23 +373,23 @@ public final class PhoneNumber {
 - **不要企图让`equals`方法过于智能**。如果只是简单地测试域中的值是否相等，则不难做到遵守`equals`约定。如果想过度地去寻求各种等价关系，则很容易陷人麻烦之中。把任何一种别名形式考虑到等价的范围内，往往不会是个好主意。例如，`File`类不应该试图把指向同一个文件的符号链接(`symbolic link`)当作相等的对象来看待。所幸`File`类没有这样做。
 
 - **不要将`equals`声明中的`Object`对象替换为其他的类型**。程序员编写出下面这样的`equals`方法并不鲜见，这会使程序员花上数个小时都搞不清为什么它不能正常工作：
-``` java
-// Broken - parameter type must be Object!
-public boolean equals(MyClass o) {
-    ...
-}
-```
-问题在于，这个方法并没有覆盖`Object.equals`，因为它的参数应该是`Object`类型，相反，它重载(`overload`)了`Object.equals`（Item 52）。在原有`equals`方法的基础上，再提供一个“强类型(`strongly typed`)”的`equals`方法，即使这两个方法返回同样的结果（没有强制的理由必须这样做），这也是不可以接受的。因为它能导致`@Override`注解在子类生成误报并提供错误的安全感。
-
-`@Override`注解的用法一致，就如本条目中所示，可以防止犯这种错误（Item 40）。这个`equals`方法不能编译，错误消息会告诉你到底哪里出了问题：
-``` java
-// Still broken, but won’t compile
-@Override public boolean equals(MyClass o) {
-    ...
-}
-```
-编写和测试`equals`（和`hashCode`）方法很繁琐，结果代码很平常。手动编写和测试这些方法的一个很好的替代方法是使用Google的开源`AutoValue`框架，该框架会自动为您生成这些方法，由类中的单个注释触发。在大多数情况下，`AutoValue`生成的方法与您自己编写的方法基本相同。
-
-IDE也有生成`equals`和`hashCode`方法的工具，但生成的源代码比使用`AutoValue`的代码更冗长，更不易读，不会自动跟踪类中的更改，因此需要测试。也就是说，让IDE生成`equals`（和`hashCode`）方法通常比手动实现它们更可取，因为IDE不会造成粗心的错误，大多数人也会这样做。
-
-总之，不要覆盖`equals`方法，除非你必须：在许多情况下，从`Object`继承的实现完全符合您的要求。如果你确实覆盖了`equals`，请确保比较所有类的重要字段，并以保留`equals`约定的所有五个条款的方式对它们进行比较。
+    ``` java
+    // Broken - parameter type must be Object!
+    public boolean equals(MyClass o) {
+        ...
+    }
+    ```
+    问题在于，这个方法并没有覆盖`Object.equals`，因为它的参数应该是`Object`类型，相反，它重载(`overload`)了`Object.equals`（Item 52）。在原有`equals`方法的基础上，再提供一个“强类型(`strongly typed`)”的`equals`方法，即使这两个方法返回同样的结果（没有强制的理由必须这样做），这也是不可以接受的。因为它能导致`@Override`注解在子类生成误报并提供错误的安全感。
+    
+    `@Override`注解的用法一致，就如本条目中所示，可以防止犯这种错误（Item 40）。这个`equals`方法不能编译，错误消息会告诉你到底哪里出了问题：
+    ``` java
+    // Still broken, but won’t compile
+    @Override public boolean equals(MyClass o) {
+        ...
+    }
+    ```
+    编写和测试`equals`（和`hashCode`）方法很繁琐，结果代码很平常。手动编写和测试这些方法的一个很好的替代方法是使用Google的开源`AutoValue`框架，该框架会自动为您生成这些方法，由类中的单个注释触发。在大多数情况下，`AutoValue`生成的方法与您自己编写的方法基本相同。
+    
+    IDE也有生成`equals`和`hashCode`方法的工具，但生成的源代码比使用`AutoValue`的代码更冗长，更不易读，不会自动跟踪类中的更改，因此需要测试。也就是说，让IDE生成`equals`（和`hashCode`）方法通常比手动实现它们更可取，因为IDE不会造成粗心的错误，大多数人也会这样做。
+    
+    总之，不要覆盖`equals`方法，除非你必须：在许多情况下，从`Object`继承的实现完全符合您的要求。如果你确实覆盖了`equals`，请确保比较所有类的重要字段，并以保留`equals`约定的所有五个条款的方式对它们进行比较。
