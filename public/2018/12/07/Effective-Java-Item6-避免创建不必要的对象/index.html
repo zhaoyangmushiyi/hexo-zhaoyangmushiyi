@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Effective Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在需要一个对象时，恰当的做法是尽可能重用这个对象而非创建一个功能完全一样的新对象。重用既比较快又比较流行。如果一个对象是不可变的(Item 17)，那么它总是可以被重用的。">
+<meta name="keywords" content="Java,Effective Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java Item6 避免创建不必要的对象">
+<meta property="og:url" content="http://zhaoyangmushiyi.github.io/2018/12/07/Effective-Java-Item6-避免创建不必要的对象/index.html">
+<meta property="og:site_name" content="朝阳暮逝忆">
+<meta property="og:description" content="在需要一个对象时，恰当的做法是尽可能重用这个对象而非创建一个功能完全一样的新对象。重用既比较快又比较流行。如果一个对象是不可变的(Item 17)，那么它总是可以被重用的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-07T09:07:10.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java Item6 避免创建不必要的对象">
+<meta name="twitter:description" content="在需要一个对象时，恰当的做法是尽可能重用这个对象而非创建一个功能完全一样的新对象。重用既比较快又比较流行。如果一个对象是不可变的(Item 17)，那么它总是可以被重用的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zhaoyangmushiyi.github.io/2018/12/07/Effective-Java-Item6-避免创建不必要的对象/">
+
+
+
+
+
+  <title>Effective Java Item6 避免创建不必要的对象 | 朝阳暮逝忆</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">朝阳暮逝忆</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhaoyangmushiyi.github.io/2018/12/07/Effective-Java-Item6-避免创建不必要的对象/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="朝阳暮逝忆">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝阳暮逝忆">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Effective Java Item6 避免创建不必要的对象</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-07T16:38:39+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Effective-Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Effective Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Effective-Java/chapter-2/" itemprop="url" rel="index">
+                    <span itemprop="name">chapter 2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在需要一个对象时，恰当的做法是尽可能重用这个对象而非创建一个功能完全一样的新对象。重用既比较快又比较流行。如果一个对象是不可变的(Item 17)，那么它总是可以被重用的。<br><a id="more"></a></p>
+<p>作为一个绝对不要这么做的极端示例，考虑如下语句：    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">new</span> String(<span class="string">"bikini"</span>); <span class="comment">// DON'T DO THIS!</span></span><br></pre></td></tr></table></figure>
+<p>这个语句在每次执行时都会创建一个新的字符串实例，而这些对象创建其实都是不必要的。<code>String</code>构造方法的参数(“<code>bikini</code>“)本身就是个<code>String</code>实例，与构造函数创建的所有对象功能相同。如果这种用法出现在一个循环语句中或一个被频繁调用的方法中，那么可能会创建百万个没必要的<code>String</code>实例。</p>
+<p>改进后的版本简单如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"bikini"</span>;</span><br></pre></td></tr></table></figure>
+<p>这个版本使用单个的字符串实例，而不是每次执行时创建一个新的。此外，它还确保了运行在同一个虚拟机中并且包含了相同字符串字面值的其他代码能够重用该对象 。如果不变类既提供了静态工厂方法（Item 1），也提供了构造方法，那么你就可以通过前者来避免创建不必要的对象。例如，工厂方法<code>Boolean.valueOf(String)</code>比构造函数<code>Boolean(String)</code>更可取，后者在Java 9中已经被弃用。每一次调用构造方法，一定会创建一个新的对象，然而工厂方法完全没必要这么做，而且实践当中也不会这么做。除了重用不可变对象之外，如果你知道不会修改这个可变对象，那么你也可以重用这个可变对象。</p>
+<p>有些对象创建要比其他对象昂贵得多。如果你以后会反复需要这样一个“昂贵的对象”，那么最好将其缓存以供重用。不幸的是，在创建这样的对象时，并不总是显而易见的。假设你想写一个方法来确定字符串是否是有效的罗马数字。这里有个最简单的方法就是，使用正则表达式来做这件事情：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Performance can be greatly improved!</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isRomanNumeral</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s.matches(<span class="string">"^(?=.)M*(C[MD]|D?C&#123;0,3&#125;)"</span></span><br><span class="line">            + <span class="string">"(X[CL]|L?X&#123;0,3&#125;)(I[XV]|V?I&#123;0,3&#125;)$"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个实现的问题在于它依赖于<code>String.matches</code>方法。<strong>虽然<code>String.matches</code>是检查一个字符串是否匹配这个正则表达式最简单的方法，但是在性能要求苛刻的场景下，他并不适合重复使用</strong>。这样做的问题是，它会在内部为正则表达式创建一个<code>Pattern</code>实例，并且仅仅使用它一次，之后它就可以进行垃圾收集了。创建一个<code>Pattern</code>实例非常昂贵，因为它需要将正则表达式编译成一个有限状态机。</p>
+<p>为了改进性能，请在类的初始化过程中手动将正则表达式编译为<code>Pattern</code>实例（它是不可变的），然后将其缓存起来，并在每次调用<code>isRomanNumeral</code>方法时重用这个实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Reusing expensive object for improved performance</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RomanNumerals</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Pattern ROMAN = Pattern.compile(<span class="string">"^(?=.)M*(C[MD]|D?C&#123;0,3&#125;)"</span></span><br><span class="line">    		+ <span class="string">"(X[CL]|L?X&#123;0,3&#125;)(I[XV]|V?I&#123;0,3&#125;)$"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isRomanNumeral</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">   	 	<span class="keyword">return</span> ROMAN.matcher(s).matches();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改进版本的<code>isRomanNumeral</code>在频繁调用的情况下极大提升了性能 。在我的机器上，当输入长度为8的字符串时，第一版的方法执行了1.1微秒，而改进版的方法执行了0.17微秒，比原来快了6.5倍。不仅性能得到了改善，而且可以认为代码也变得更清晰了。使用一个静态<code>final</code>字段来表示原本不可见的Pattern的实例，这样允许我们给这个字段取个名字，这样做比正则表达式本身可读性高多了。</p>
+<p>如果包含改进版的<code>isRomanNumeral</code>方法的类被初始化了，但是没有主动调用这个方法，那么字段<code>ROMAN</code>依然会被没必要地初始化。当第一次调用<code>isRomanNumeral</code>方法时，我们可以通过惰性初始化字段的方法来消除上面的没必要地初始化。但是不推荐这样做。因为对于延迟初始化来说，它常常会导致实现变得复杂，并且不能带来很大的性能提升。当一个对象是不可变的时，很明显它可以安全地被重用，但是在其他情况下，它就不那么明显了，甚至是违反直觉的。考虑适配器的情况，也称为视图。所谓适配器，指的是委托给支撑对象的对象，并提供了另外的接口。由于适配器除了支撑对象的状态外，它自身是没有状态的，因此对于给定的对象来说，没必要为其创建多个适配器实例 。</p>
+<p>例如，<code>Map</code>接口的<code>keySet</code>方法返回<code>Map</code>对象的<code>Set</code>视图，其中包含映射中的所有键。直觉上，似乎每个对<code>keySet</code>的调用都必须创建一个新的<code>Set</code>实例，不过实际情况却是，每次调用给定<code>Map</code>对象的<code>keySet</code>都只会返回同一个<code>Set</code>实例 。虽然返回的Set实例通常是可变的，但所有返回的对象在功能上是相同的: 当其中一个返回的对象发生更改时，其他的对象也会发生变化，因为它们都是由同一个<code>Map</code>实例支持的。虽然创建<code>keySet</code>视图对象的多个实例基本上是无害的，但它是不必要的，没有任何好处。</p>
+<p>另一种创建不必要对象的方法是自动装箱 ，它允许程序员把原生类型和原生类型的包装类混合用，并且会根据需要自动地拆箱和装箱。<strong>自动装箱使原生类型和包装类之间界限变得模糊，但是并没有消除原生类型和原生类型的包装类之间的区别</strong>。这里存在一些微小的语义上的差别以及稍微有点大的性能上的差别（Item 61)。考虑如下方法，它会计算所有正整型int值的和。为了做到这一点，程序需要使用<code>long</code>运算，因为<code>int</code>不足以容纳所有正整型<code>int</code>值的和：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Hideously slow! Can you spot the object creation?</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">sum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Long sum = <span class="number">0L</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt;= Integer.MAX_VALUE; i++)</span><br><span class="line">    	sum += i;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该程序会得到正确的答案，不过要比预计慢很多，原因在于一个字符拼写上的错误 。变量sum被声明为Long型而不是long型，这就意味着这个程序要构造2^31个不必要的<code>Long</code>实例（大概每一次<code>long</code>型<code>i</code>与<code>Long</code>类型的<code>sum</code>相加都会创建一个实例）。在我的机器上，将<code>sum</code>声明由<code>Long</code>改为<code>long</code>则会将运行时间由6.3s减少到0.59s。这个例子很清楚：<strong>相对包装类型，优先使用原生类型，并且注意无意识地自动装箱</strong>。</p>
+<p>不应该误解该条款，以为对象创建是非常昂贵的，应该避免。相反地，小对象的创建和回收是廉价的，因为他们的构造函数没有做什么明显的工作，特别是在现代JVM实现中 。创建额外的对象来增强程序的清晰度、简单性或程序的能力通常是一件好事。相反，除非池中的对象非常重量级，否则通过维护自己的对象池来避免对象创建是一个坏主意。真正需要对象池的对象的一个典型示例就是数据库连接。建立连接的成本非常高，因此重用这些对象是有意义的。然而，一般来说，维护自己的对象池会使代码混乱，增加内存占用，并损害性能。现代JVM实现具有高度优化的垃圾收集器，它们在轻量级对象上轻松胜过此类对象池。 </p>
+<p>与本条款对应的是关于<strong>防御式拷贝</strong>的Item 50。当前的条款说，“当应该重用一个已经存在的对象时，就不应该创建新的对象”。然而，第50条说，“当您应该创建一个新的对象时，不要重用现有的对象。”注意，在需要进行防御性复制时重用对象的惩罚远远大于不必要地创建重复对象的惩罚。如果不能在需要的地方创建防御复制，可能会导致潜在的bug和安全漏洞;而不必要地创建对象只会影响样式和性能。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Effective-Java/" rel="tag"># Effective Java</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/07/Effective-Java-Item5-优先使用依赖注入而非硬编码资源的关联关系/" rel="next" title="Effective Java Item5 优先使用依赖注入而非硬编码资源的关联关系">
+                <i class="fa fa-chevron-left"></i> Effective Java Item5 优先使用依赖注入而非硬编码资源的关联关系
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/07/Effective-Java-Item7-消除废弃的对象引用/" rel="prev" title="Effective Java Item7 消除废弃的对象引用">
+                Effective Java Item7 消除废弃的对象引用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/uploads/avatar.gif" alt="朝阳暮逝忆">
+            
+              <p class="site-author-name" itemprop="name">朝阳暮逝忆</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhaoyangmushiyi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaoyangmushiyi@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/zhaoyangmushiyi" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朝阳暮逝忆</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">30.2k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <script type="text/javascript" src="/js/src/particle.js"></script>
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>

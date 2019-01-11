@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Effective Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这本书的目的是帮助你高效地使用java这门编程语言和它的基本类库：java.lang ,  java.util, and java.io和这些包子包下的：java.util.concurrent 和java.util.function 。其它的类库也会时不时地被讨论到。 这本书有90个小项，每一项都表达了一个准则。这些准则是由那些最优秀、最有经验的程序员总结出来的最佳实践。这些小项松散地被分到11">
+<meta name="keywords" content="Java,Effective Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java Item0 引言">
+<meta property="og:url" content="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item0-引言/index.html">
+<meta property="og:site_name" content="朝阳暮逝忆">
+<meta property="og:description" content="这本书的目的是帮助你高效地使用java这门编程语言和它的基本类库：java.lang ,  java.util, and java.io和这些包子包下的：java.util.concurrent 和java.util.function 。其它的类库也会时不时地被讨论到。 这本书有90个小项，每一项都表达了一个准则。这些准则是由那些最优秀、最有经验的程序员总结出来的最佳实践。这些小项松散地被分到11">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-06T11:10:09.950Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java Item0 引言">
+<meta name="twitter:description" content="这本书的目的是帮助你高效地使用java这门编程语言和它的基本类库：java.lang ,  java.util, and java.io和这些包子包下的：java.util.concurrent 和java.util.function 。其它的类库也会时不时地被讨论到。 这本书有90个小项，每一项都表达了一个准则。这些准则是由那些最优秀、最有经验的程序员总结出来的最佳实践。这些小项松散地被分到11">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item0-引言/">
+
+
+
+
+
+  <title>Effective Java Item0 引言 | 朝阳暮逝忆</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">朝阳暮逝忆</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item0-引言/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="朝阳暮逝忆">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝阳暮逝忆">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Effective Java Item0 引言</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T16:56:36+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Effective-Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Effective Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Effective-Java/chapter-1/" itemprop="url" rel="index">
+                    <span itemprop="name">chapter 1</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这本书的目的是帮助你高效地使用java这门编程语言和它的基本类库：java.lang ,  java.util, and java.io<br>和这些包子包下的：java.util.concurrent 和java.util.function 。其它的类库也会时不时地被讨论到。</p>
+<p>这本书有90个小项，每一项都表达了一个准则。这些准则是由那些最优秀、最有经验的程序员总结出来的最佳实践。<br>这些小项松散地被分到11个章节下面，每个章节都涵盖了软件设计的一个广泛的方面。这本书不需要一页一页地读，每一项都是独立的，正正好好。<br>这些项目被大量交叉引用，因此您可以轻松地在书中计划自己的课程。<br><a id="more"></a></p>
+<p>自从这本书第二版出版后，Java平台又增添了很多新特性。这本书大部分都或多或少地用到了这些特性。这张表向您展示了主要覆盖了的关键特性:</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>所在条目</th>
+<th>版本 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lambdas</td>
+<td>第42~44条</td>
+<td>Java8</td>
+</tr>
+<tr>
+<td>Streams</td>
+<td>第45~48条</td>
+<td>Java8</td>
+</tr>
+<tr>
+<td>Optionals</td>
+<td>第55条</td>
+<td>Java8</td>
+</tr>
+<tr>
+<td>Default methods in interfaces</td>
+<td>第21条</td>
+<td>Java8</td>
+</tr>
+<tr>
+<td>try -with-resources</td>
+<td>第9条</td>
+<td>Java7</td>
+</tr>
+<tr>
+<td>@SafeVarargs</td>
+<td>第32条</td>
+<td>Java7</td>
+</tr>
+<tr>
+<td>Modules</td>
+<td>第15条</td>
+<td>Java9</td>
+</tr>
+</tbody>
+</table>
+<p>大多数项目都用程序示例进行说明的。<br>这本书的一个重要特点是它通过一些代码示例，来阐明许多设计模式和习惯用法。<br>在适当的情况下，它们被交叉引用到这个领域的标准参考工作[Gamma95]。</p>
+<p>很多项目都包含了一个或多个程序示例，来说明有些行为是可以避免的。<br>这种例子，被称为反例，然后被清楚地加上了注释，如“Never do this!”。<br>在每种情况下，该项目解释了为什么这个例子不好，并提出了另一种方法。</p>
+<p>这本书不适合初学者:它假定您已经熟悉Java。<br>因为effective java是为那些有这门语言工作经验的人阅读的，所以它应该给那些高级开发人员提供更高级的使用。</p>
+<p>这本书中的大部分规则都源于一些基本原则。简单明了就是是很重要的原则之一。组件的使用者不会对它的行为感到惊讶。<br>组件应该尽可能地小，但又不能太小。（就像这本书中提到的，这里的术语“组件”是指可重用的软件元素，即从一个独立的方法到一个由多个模块组成的复杂的框架，<br>都可以被称为“组件”）。<br>代码应该能重复使用而不是到处复制。组建之间的依赖应该保持低耦合。代码在完成之后错误应该尽快被检测出来，最好是在编译时期。</p>
+<p>虽然这本书中的规则并不是100%的适用，但在绝大多数情况下它们确实都是最佳的编程实践。<br>你不应该盲目地遵循这些规则，如果有充分的理由，你也可以不遵循这些规则。<br>学习编程的艺术，就跟其它大多数学科一样，先要学习规则，然后要知道什么时候去打破规则。</p>
+<p>大部分情况下，这本书并没有涉及性能方面。它指导我们如何写出清晰的，正确的，可重用的，健壮的，可维护的代码。如果你能做到这点，那么提升你想要的性能就是一件相对简单的事情了(Item 67)。<br>有些项目确实讨论了所关心的性能问题，有些项目还给出了有关性能的数据。这些数据在被介绍时，都提前说明是在“我的机器上”。这种描述是被认为最恰当的。</p>
+<p>当讨论Java编程语言的特性和它的类库时，有时候需要引用特定版本。为了方便起见，这本书用别名来指定官方版本名。<br>下面的表展示了官方版本名和别名之间的映射关系。</p>
+<table>
+<thead>
+<tr>
+<th>官方版本名</th>
+<th>别名 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JDK 1.0.x</td>
+<td>Java 1.0</td>
+</tr>
+<tr>
+<td>JDK 1.1.x</td>
+<td>Java 1.1 </td>
+</tr>
+<tr>
+<td>Java 2 Platform, Standard Edition, v1.2</td>
+<td>Java 2</td>
+</tr>
+<tr>
+<td>Java 2 Platform, Standard Edition, v1.3</td>
+<td>Java 3</td>
+</tr>
+<tr>
+<td>Java 2 Platform, Standard Edition, v1.4</td>
+<td>Java 4</td>
+</tr>
+<tr>
+<td>Java 2 Platform, Standard Edition, v5.0</td>
+<td>Java 5</td>
+</tr>
+<tr>
+<td>Java Platform, Standard Edition 6</td>
+<td>Java 6</td>
+</tr>
+<tr>
+<td>Java Platform, Standard Edition 7</td>
+<td>Java 7</td>
+</tr>
+<tr>
+<td>Java Platform, Standard Edition 8</td>
+<td>Java 8</td>
+</tr>
+<tr>
+<td>Java Platform, Standard Edition 9</td>
+<td>Java 9</td>
+</tr>
+</tbody>
+</table>
+<p>书中的例子都已经相当完整了，但是比完整性跟重要的是可读性。程序员们大量地使用java.util和java.io包下的类。为了成功编译书中的示例，您可能需要添加一个或多个导入声明，或其他这样的样板文件。<br>这本书的网址上<a href="http://joshbloch.com/effectivejava" target="_blank" rel="noopener">Effective Java</a>，包含了每个示例的一个完整版本，你可以下载下来编译并运行它。</p>
+<p>大多数情况下，这本书里用到的技术术语都在Java SE 8这个版本的Java语言规范中定义的。其中有一些术语特别值得提出来。比如说，Java支持四种类型:接口(包括注解)、类(包括枚举)、数组和原生类型。前三种被称为引用类型。类的实例化和数组叫做对象，<br>而原生类型的值不是对象。类的成员包括它的字段、方法、成员类和成员接口。方法的签名包括它的名字和形参的类型；签名不包括方法的返回类型。</p>
+<p>本书使用了一些与Java语言规范不同的术语。与Java语言规范不同，本书使用继承作为子类化的同义词。与使用术语继承来实现接口不同，这本书简单地说明了一个类实现了一个接口，或者一个接口继承了另一个接口。本书使用了传统的包私有的（package-private）访问级别，<br>而不是技术上正确的包访问（package access），来描述没有指定的访问级别。</p>
+<p>这本书用到了一些《Java语言规范》没有定义的技术术语。API暴露出的术语(简称API)指程序员访问类、接口或包里面的的类、接口、构造函数、成员和序列化形式。术语API是application programming interface的简称，它更倾向于使用其他更好的术语接口，<br>以避免与该名称的语言结构混淆。编写使用API的程序的程序员被称为API的用户。通过API来实现的类叫做API的客户端。</p>
+<p>类、接口、构造函数、成员和序列化形式统称为API元素。<br>一个暴露出来的API是由可以在定义该API的包外访问到的API元素组成。这些API元素可以给任意客户端使用，并且API的作者提供支持。不凑巧的是，它们也是Javadoc实用程序在其默认的操作模式中生成文档的元素。宽泛地说，一个包的对外API由公共和受保护的成员和包中的每个公共类或接口的构造函数组成。<br>在Java9中，模块系统被添加到平台里。如果一个库使用了模块系统，它对外的API是该模块系统声明对外包下的对外API的联和。<br>最后，提供一下<a href="https://github.com/jbloch/effective-java-3e-source-code" target="_blank" rel="noopener">Effective Java源码</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Effective-Java/" rel="tag"># Effective Java</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/26/API实体和DTO之间的转换/" rel="next" title="Spring REST API实体和DTO之间的转换">
+                <i class="fa fa-chevron-left"></i> Spring REST API实体和DTO之间的转换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/Effective-Java-Item1-考虑静态工厂方法代替构造方法/" rel="prev" title="Effective Java Item1 考虑静态工厂方法代替构造方法">
+                Effective Java Item1 考虑静态工厂方法代替构造方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/uploads/avatar.gif" alt="朝阳暮逝忆">
+            
+              <p class="site-author-name" itemprop="name">朝阳暮逝忆</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhaoyangmushiyi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaoyangmushiyi@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/zhaoyangmushiyi" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朝阳暮逝忆</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">30.2k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <script type="text/javascript" src="/js/src/particle.js"></script>
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>
