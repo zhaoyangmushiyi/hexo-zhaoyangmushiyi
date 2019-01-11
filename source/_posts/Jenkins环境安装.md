@@ -81,6 +81,14 @@ yum install -y git
 git --version
 ```
 ### 搭建第一个项目
-
-![]()
-
+配置git web hook 安装 gitlab hook plugin 系统管理 -> 插件管理 -> 可选插件 -> 搜索 gitlab hook plugin -> 选中安装 
+![](https://github.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/tree/master/public/images/uploads/jenkins0)
+![](https://github.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/tree/master/public/images/uploads/jenkins1)
+构建一个自由风格的软件项目 
+![](https://github.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/tree/master/public/images/uploads/jenkins2)
+设置源码管理
+![](https://github.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/tree/master/public/images/uploads/jenkins3)
+设置自动构建
+![](https://github.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/tree/master/public/images/uploads/jenkins4)
+然后去gitlab填写刚刚获取的URL和Token
+![](https://github.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/tree/master/public/images/uploads/jenkins5)
