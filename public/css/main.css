@@ -1164,7 +1164,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #f6ffff;
+  background: #74c685;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2319,16 +2319,20 @@ body {
 /* 设置背景颜色，背景图加载过程中会显示背景色 */
   background-color: rgba(0,0,0,0.5);
 }
-#sidebar {
+main .sidebar {
   background: url("/images/uploads/sidebar.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-#sidebar p,
-#sidebar span,
-#sidebar a {
+main .sidebar p,
+main .sidebar span,
+main .sidebar a {
   color: #fff;
+}
+header .brand {
+  background: none;
+  color: none;
 }
 .content {
   border-radius: 20px;

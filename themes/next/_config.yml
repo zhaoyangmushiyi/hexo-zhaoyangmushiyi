@@ -1033,5 +1033,5 @@ love:
   enable: true
 # particle:
 #   enable: true
-#clipboard:
-#  enable: true
+clipboard:
+  enable: true
