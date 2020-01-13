@@ -1,156 +1,75 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-CN">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
+<link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Java,Effective Java,">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="一个类允许客户端获取他的一个实例的传统方法是提供一个公有的构造函数。除此之外，还有一个技术，每个程序员都应该掌握。就是一个类提供一个公有的静态工厂方法，这个方法就是一个简单的返回当前类一个实例的静态方法。这里有个来自于Boolean（对原生类型boolean的装箱）类内部实现的简单的例。下面的方法可以将一个原生boolean类型的值转变成一个对Boolean对象的引用： 123public sta">
-<meta name="keywords" content="Java,Effective Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Effective Java Item1 考虑静态工厂方法代替构造方法">
-<meta property="og:url" content="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item1-考虑静态工厂方法代替构造方法/index.html">
-<meta property="og:site_name" content="朝阳暮逝忆">
-<meta property="og:description" content="一个类允许客户端获取他的一个实例的传统方法是提供一个公有的构造函数。除此之外，还有一个技术，每个程序员都应该掌握。就是一个类提供一个公有的静态工厂方法，这个方法就是一个简单的返回当前类一个实例的静态方法。这里有个来自于Boolean（对原生类型boolean的装箱）类内部实现的简单的例。下面的方法可以将一个原生boolean类型的值转变成一个对Boolean对象的引用： 123public sta">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-26T06:03:13.425Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Effective Java Item1 考虑静态工厂方法代替构造方法">
-<meta name="twitter:description" content="一个类允许客户端获取他的一个实例的传统方法是提供一个公有的构造函数。除此之外，还有一个技术，每个程序员都应该掌握。就是一个类提供一个公有的静态工厂方法，这个方法就是一个简单的返回当前类一个实例的静态方法。这里有个来自于Boolean（对原生类型boolean的装箱）类内部实现的简单的例。下面的方法可以将一个原生boolean类型的值转变成一个对Boolean对象的引用： 123public sta">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://zhaoyangmushiyi.github.io').hostname,
     root: '/',
-    scheme: 'muse',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
   };
 </script>
 
+  <meta name="description" content="一个类允许客户端获取他的一个实例的传统方法是提供一个公有的构造函数。除此之外，还有一个技术，每个程序员都应该掌握。就是一个类提供一个公有的静态工厂方法，这个方法就是一个简单的返回当前类一个实例的静态方法。这里有个来自于Boolean（对原生类型boolean的装箱）类内部实现的简单的例。下面的方法可以将一个原生boolean类型的值转变成一个对Boolean对象的引用： 1public stati">
+<meta name="keywords" content="Java,Effective Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java Item1 考虑静态工厂方法代替构造方法">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhaoyangmushiyi.github.io&#x2F;2018&#x2F;12&#x2F;06&#x2F;Effective-Java-Item1-%E8%80%83%E8%99%91%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E4%BB%A3%E6%9B%BF%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95&#x2F;index.html">
+<meta property="og:site_name" content="朝阳暮逝忆">
+<meta property="og:description" content="一个类允许客户端获取他的一个实例的传统方法是提供一个公有的构造函数。除此之外，还有一个技术，每个程序员都应该掌握。就是一个类提供一个公有的静态工厂方法，这个方法就是一个简单的返回当前类一个实例的静态方法。这里有个来自于Boolean（对原生类型boolean的装箱）类内部实现的简单的例。下面的方法可以将一个原生boolean类型的值转变成一个对Boolean对象的引用： 1public stati">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-28T05:47:38.179Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item1-%E8%80%83%E8%99%91%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E4%BB%A3%E6%9B%BF%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/">
 
 
-  <link rel="canonical" href="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item1-考虑静态工厂方法代替构造方法/">
-
-
-
-
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
 
   <title>Effective Java Item1 考虑静态工厂方法代替构造方法 | 朝阳暮逝忆</title>
   
@@ -160,267 +79,186 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">朝阳暮逝忆</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <h1 class="site-subtitle" itemprop="description"></h1>
-      
   </div>
 
   <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
+
 <nav class="site-nav">
   
-
-  
-    <ul id="menu" class="menu">
-      
-        
+  <ul id="menu" class="menu">
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
-          </a>
-        </li>
-      
-        
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
-      
-        
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
 
-      
-    </ul>
-  
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
-  
+  </li>
+  </ul>
+
 </nav>
-
-
-
- </div>
+</div>
     </header>
 
-    <main id="main" class="main">
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
+  <div class="posts-expand">
+      
   
   
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item1-考虑静态工厂方法代替构造方法/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhaoyangmushiyi.github.io/2018/12/06/Effective-Java-Item1-%E8%80%83%E8%99%91%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E4%BB%A3%E6%9B%BF%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="朝阳暮逝忆">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/uploads/avatar.gif">
+      <meta itemprop="name" content="朝阳暮逝忆">
+      <meta itemprop="description" content="Monochrome">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="朝阳暮逝忆">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">Effective Java Item1 考虑静态工厂方法代替构造方法</h2>
-        
+        <h1 class="post-title" itemprop="name headline">
+          Effective Java Item1 考虑静态工厂方法代替构造方法
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T17:09:47+08:00">
-                2018-12-06
-              </time>
-            
+              <span class="post-meta-item-text">发表于</span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+              <time title="创建时间：2018-12-06 17:09:47" itemprop="dateCreated datePublished" datetime="2018-12-06T17:09:47+08:00">2018-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-28 13:47:38" itemprop="dateModified" datetime="2019-11-28T13:47:38+08:00">2019-11-28</time>
+              </span>
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
                 </span>
-
-                
-                
-                  ， 
-                
-              
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/Effective-Java/" itemprop="url" rel="index">
                     <span itemprop="name">Effective Java</span>
                   </a>
                 </span>
-
-                
-                
-                  ， 
-                
-              
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/Effective-Java/chapter-2/" itemprop="url" rel="index">
                     <span itemprop="name">chapter 2</span>
                   </a>
                 </span>
-
-                
-                
-              
             </span>
-          
 
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  11
-                </span>
-              
-            </div>
-          
-
-          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
 
         </div>
       </header>
-    
 
     
     
@@ -428,12 +266,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <p>一个类允许客户端获取他的一个实例的传统方法是提供一个公有的构造函数。除此之外，还有一个技术，每个程序员都应该掌握。就是一个类提供一个公有的静态工厂方法，这个方法就是一个简单的返回当前类一个实例的静态方法。这里有个来自于<strong>Boolean</strong>（对原生类型<strong>boolean</strong>的装箱）类内部实现的简单的例。下面的方法可以将一个原生<strong>boolean</strong>类型的值转变成一个对<strong>Boolean</strong>对象的引用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 <a id="more"></a>
+
 <p>请注意，上面这个静态工厂方法与设计模式[Gamma95]中的工厂方法模式并不一样。本条款所介绍的静态工厂方法在设计模式一书中并没有直接的等价物。  </p>
 <p>除了公有构造方法外，类还可以向其客户端提供静态工厂方法。相比于公有构造方法来说，提供静态工厂方法有利也有弊。</p>
 <p><strong>静态工厂方法其中一个好处是，它可以有自己的名字，而构造函数不行</strong>。如果构造函数的参数，他们本身并不能描述返回的对象，那么拥有恰当名字的静态工厂将会更加易于使用，所生成的客户端代码的可读性也更好。举个例子，通过构造函数<strong>BigInteger(int, int, Random)</strong> 返回一个值可能是质数的<strong>BigInteger</strong> 对象，还有更好的方法，就是通<strong>BigInteger.probablePrime</strong> 这个静态工厂方法来实现。（这个方法在java4时加入）</p>
@@ -462,273 +298,166 @@
 <p><strong>只提供静态工厂方法的主要限制是没有公共或受保护构造函数的类不能被子类化</strong>。例如，在集合框架中不可能子类化任何方便实现类。可以说，这可能是因祸得福，因为它鼓励程序员使用组合而不是继承(条目18)，并且需要不可变类型(条目17)</p>
 <p><strong>静态工厂方法的第二个缺点是，程序员很难找到它们</strong>。他们并不像构造方法那样在API文档中有清楚的说明，这样对于只提供静态工厂方法，而没提供构造方法的类来说，我们就很难知晓到底该用那种方式来实例化它。Javadoc工具可能有一天会引起对静态工厂方法的注意。与此同时，你可以多多注意到类或接口文档中的静态工厂并坚持使用常见的命名约定来减少此类问题的发生。下面是一些静态工厂方法的常用名称。这个列表并不是十分详尽:</p>
 <ul>
-<li><p>From —— 一种类型转换方法，它接受单个参数并返回该类型的相应实例，例如:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Date d = Date.from(instant);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Of —— 一个聚合方法，它接受多个参数并返回该类型的实例，该实例包含了它们，例如:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Rank&gt; faceCards = EnumSet.of(JACK, QUEEN, KING);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>valueOf —— from与of的一种更加冗长的替代方案 ，例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BigInteger prime = BigInteger.valueOf(Integer.MAX_VALUE);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>instance或者getInstance —— 返回一个实例，该实例由其参数(如果有)描述，但不能说具有相同的值，例如:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StackWalker luke = StackWalker.getInstance(options);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>create或者newInstance —— 跟instance和getInstance方法有点类似,期望方法能保证每次调用都返回新的实例，例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object newArray = Array.newInstance(classObject, arrayLen);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>getType —— 有点像getInstance，但是，是在工厂方法在一个不同的类中时使用。Type就是工厂方法返回的对象类型，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileStore fs = Files.getFileStore(path);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>newType —— 有点像newInstance，但是，是在工厂方法在一个不同的类中时使用。Type就是工厂方法返回的对象类型，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader br = Files.newBufferedReader(path);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>type ——  getType与newType的一个简洁的替代方案，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Complaint&gt; litany = Collections.list(legacyLitany);</span><br></pre></td></tr></table></figure>
-</li>
+<li>From —— 一种类型转换方法，它接受单个参数并返回该类型的相应实例，例如:<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Date d = Date.from(instant);</span></pre></td></tr></table></figure></li>
+<li>Of —— 一个聚合方法，它接受多个参数并返回该类型的实例，该实例包含了它们，例如:<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Set&lt;Rank&gt; faceCards = EnumSet.of(JACK, QUEEN, KING);</span></pre></td></tr></table></figure></li>
+<li>valueOf —— from与of的一种更加冗长的替代方案 ，例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">BigInteger prime = BigInteger.valueOf(Integer.MAX_VALUE);</span></pre></td></tr></table></figure></li>
+<li>instance或者getInstance —— 返回一个实例，该实例由其参数(如果有)描述，但不能说具有相同的值，例如:<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">StackWalker luke = StackWalker.getInstance(options);</span></pre></td></tr></table></figure></li>
+<li>create或者newInstance —— 跟instance和getInstance方法有点类似,期望方法能保证每次调用都返回新的实例，例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Object newArray = Array.newInstance(classObject, arrayLen);</span></pre></td></tr></table></figure></li>
+<li>getType —— 有点像getInstance，但是，是在工厂方法在一个不同的类中时使用。Type就是工厂方法返回的对象类型，比如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">FileStore fs = Files.getFileStore(path);</span></pre></td></tr></table></figure></li>
+<li>newType —— 有点像newInstance，但是，是在工厂方法在一个不同的类中时使用。Type就是工厂方法返回的对象类型，比如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">BufferedReader br = Files.newBufferedReader(path);</span></pre></td></tr></table></figure></li>
+<li>type ——  getType与newType的一个简洁的替代方案，比如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">List&lt;Complaint&gt; litany = Collections.list(legacyLitany);</span></pre></td></tr></table></figure>
+总结来说，静态工厂方法和构造方法都有他们的用法，我们需要理解他们各自的优点。通常，静态工厂是优先选择的，这样可以避免习惯性地在没有考虑静态工厂的情况下就提供公有构造方法的情况发生 。</li>
 </ul>
-<p>总结来说，静态工厂方法和构造方法都有他们的用法，我们需要理解他们各自的优点。通常，静态工厂是优先选择的，这样可以避免习惯性地在没有考虑静态工厂的情况下就提供公有构造方法的情况发生 。</p>
 
-      
     </div>
-    
-    
-    
 
     
-
+    
     
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
-            <a href="/tags/Effective-Java/" rel="tag"># Effective Java</a>
-          
-        </div>
-      
-
-      
-      
-        <div class="post-widgets">
-        
-
-        
-
-        
-          
-          <div id="needsharebutton-postbottom">
-            <span class="btn">
-              <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </span>
-          </div>
-        
-        </div>
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/12/06/Effective-Java-Item0-引言/" rel="next" title="Effective Java Item0 引言">
-                <i class="fa fa-chevron-left"></i> Effective Java Item0 引言
-              </a>
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Effective-Java/" rel="tag"># Effective Java</a>
           </div>
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/06/Effective-Java-Item2-当遇到许多构造方法参数时，考虑构建器/" rel="prev" title="Effective Java Item2 当遇到许多构造方法参数时，考虑构建器">
-                Effective Java Item2 当遇到许多构造方法参数时，考虑构建器 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
 
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/06/Effective-Java-Item0-%E5%BC%95%E8%A8%80/" rel="prev" title="Effective Java Item0 引言">
+      <i class="fa fa-chevron-left"></i> Effective Java Item0 引言
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/12/06/Effective-Java-Item2-%E5%BD%93%E9%81%87%E5%88%B0%E8%AE%B8%E5%A4%9A%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E6%97%B6%EF%BC%8C%E8%80%83%E8%99%91%E6%9E%84%E5%BB%BA%E5%99%A8/" rel="next" title="Effective Java Item2 当遇到许多构造方法参数时，考虑构建器">
+      Effective Java Item2 当遇到许多构造方法参数时，考虑构建器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
           </div>
           
 
-
-          
-
-  
-
-
-
         </div>
-        
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-      <div id="sidebar-dimmer"></div>
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
 
-      
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/uploads/avatar.gif" alt="朝阳暮逝忆">
-            
-              <p class="site-author-name" itemprop="name">朝阳暮逝忆</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">23</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="朝阳暮逝忆"
+      src="/images/uploads/avatar.gif">
+  <p class="site-author-name" itemprop="name">朝阳暮逝忆</p>
+  <div class="site-description" itemprop="description">Monochrome</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
           
-
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
           
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/zhaoyangmushiyi" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:zhaoyangmushiyi@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://plus.google.com/zhaoyangmushiyi" target="_blank" title="Google">
-                      
-                        <i class="fa fa-fw fa-google"></i>Google</a>
-                  </span>
-                
-            </div>
-          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaoyangmushiyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaoyangmushiyi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhaoyangmushiyi@gmail.com" title="E-Mail → mailto:zhaoyangmushiyi@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
 
-          
-          
 
-          
-          
 
-          
-
-        </div>
-      </section>
-
-      
-
-      
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">朝阳暮逝忆</span>
-
-  
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    
-      <span class="post-meta-item-text">Site words total count&#58;</span>
-    
-    <span title="Site words total count">68.4k</span>
-  
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">82k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:15</span>
 </div>
-
-
-
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.muse</a> v5.1.4</div>
-
-
-
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
 
         
+
 
 
 
@@ -739,35 +468,19 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-    
-
-    
-
   </div>
 
   
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+<script src="/js/love.js"></script>
 
   
 
@@ -782,97 +495,6 @@
 
 
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
 
 
 
@@ -880,51 +502,6 @@
   
 
   
-
-  
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
-
-  
-  
-  <script src="/lib/needsharebutton/needsharebutton.js"></script>
-
-  <script>
-    
-      pbOptions = {};
-      
-          pbOptions.iconStyle = "box";
-      
-          pbOptions.boxForm = "horizontal";
-      
-          pbOptions.position = "bottomCenter";
-      
-          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
-      
-      new needShareButton('#needsharebutton-postbottom', pbOptions);
-    
-    
-  </script>
-
-  
-
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
-
-
-  
-
-  <script type="text/javascript" src="/js/src/love.js"></script>
-  <script type="text/javascript" src="/js/src/particle.js"></script>
-  <!-- 代码块复制功能 -->
-  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
-  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 
 </body>
 </html>

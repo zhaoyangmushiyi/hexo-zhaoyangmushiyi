@@ -10,6 +10,7 @@ categories:
 　　Jenkins提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。Jenkins的主要开发者是川口耕介。Jenkins是在MIT许可证下发布的自由软件。  
 　　可以通过各种手段触发构建。例如提交给版本控制系统时被触发，也可以通过类似Cron的机制调度，也可以在其他的构建已经完成时，还可以通过一个特定的URL进行请求。
 <!-- more -->
+
 ## Jenkins
 ### JDK环境安装
 安装wget，wget是一个从网络上自动下载文件的自由工具，支持通过 HTTP、HTTPS、FTP 三个最常见的 TCP/IP协议 下载。
@@ -42,11 +43,11 @@ java -version
 ```
 ### Maven安装
 下载[Maven](http://mirror.bit.edu.cn/apache/maven/maven-3/)
-```
+```shell
 wget http://mirror.bit.edu.cn/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
 ```
 添加阿里的Maven仓库节点配置`conf/settings.xml`
-```
+```xml
     <mirror>
         <id>nexus-aliyun</id>
         <mirrorOf>*</mirrorOf>
@@ -63,32 +64,20 @@ export PATH
 ```
 ### 安装Jenkins
 下载[Jenkins](http://updates.jenkins-ci.org/download/war/)
-```
+```shell
 wget http://updates.jenkins-ci.org/download/war/2.157/jenkins.war
 ```
 启动Jenkins war包，默认8080端口
-```
+```shell
 java -jar jenkins.war
 ```
 开放端口
-```
+```shell
 firewall-cmd --add-port=8080/tcp --permanent   #添加规则
 firewall-cmd --reload                          #重新加载防火墙配置
 ```
 ### 安装git
-```
+```shell
 yum install -y git
 git --version
 ```
-### 搭建第一个项目
-配置git web hook 安装 gitlab hook plugin 系统管理 -> 插件管理 -> 可选插件 -> 搜索 gitlab hook plugin -> 选中安装 
-![](https://raw.githubusercontent.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/master/public/images/uploads/jenkins/jenkins0.png)
-![](https://raw.githubusercontent.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/master/public/images/uploads/jenkins/jenkins1.png)
-构建一个自由风格的软件项目 
-![](https://raw.githubusercontent.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/master/public/images/uploads/jenkins/jenkins2.png)
-设置源码管理
-![](https://raw.githubusercontent.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/master/public/images/uploads/jenkins/jenkins3.png)
-设置自动构建
-![](https://raw.githubusercontent.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/master/public/images/uploads/jenkins/jenkins4.png)
-然后去gitlab填写刚刚获取的URL和Token
-![](https://raw.githubusercontent.com/zhaoyangmushiyi/hexo-zhaoyangmushiyi/master/public/images/uploads/jenkins/jenkins5.png)
