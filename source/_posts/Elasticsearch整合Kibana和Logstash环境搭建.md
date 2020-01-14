@@ -251,7 +251,7 @@ i18n.locale: "zh-CN"
 
 #### 编排docker-compose
 
-新建文件`docker-compose.yml`，配置特权方式，端口，映射配置文件：
+新建文件`docker-compose.yml`，配置特权方式和端口，映射配置kibana.yml文件：
 
 ```yaml
 version: '2'
