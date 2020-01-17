@@ -14,10 +14,10 @@ categories:
 ELK是有Elastic公司的三个组件配合进行日志收集，分别是：
 
 - [ElasticSearch](https://www.elastic.co/cn/products/elasticsearch):用于存储日志信息。
-- [Logstash](https://www.elastic.co/cn/products/elasticsearch):用于收集、处理和转发日志信息。
-- [Kibana](https://www.elastic.co/cn/products/Kibana):提供可搜索的Web可视化界面。
+- [Logstash](https://www.elastic.co/cn/products/logstash):用于收集、处理和转发日志信息。
+- [Kibana](https://www.elastic.co/cn/products/kibana):提供可搜索的Web可视化界面。
 
-ELK也可以配合[Beats](https://www.elastic.co/cn/products/Beats)进行使用，后续会写一篇文章来介绍。
+ELK也可以配合[Beats](https://www.elastic.co/cn/products/beats)进行使用，后续会写一篇文章来介绍。
 
 ### 环境搭建
 
