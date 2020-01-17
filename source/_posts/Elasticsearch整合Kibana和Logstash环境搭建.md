@@ -294,6 +294,9 @@ docker pull docker.elastic.co/logstash/logstash:7.5.1
    #安装output插件
    RUN logstash-plugin install logstash-output-elasticsearch
    
+   #安装json_lines插件
+   RUN logstash-plugin install logstash-codec-json_lines
+   
    #容器启动时执行的命令.(CMD 能够被 docker run 后面跟的命令行参数替换)
    CMD ["-f","/usr/share/logstash/config/mysql.conf"]
    ```
@@ -345,7 +348,7 @@ docker pull docker.elastic.co/logstash/logstash:7.5.1
    		jdbc_paging_enabled => "true"
    		jdbc_page_size => "50000"
            ## 查询的数据，根据数据库自己定义
-   		statement => "select * from tb_name"
+   		statement => "select * from tb_user"
    		## 每分钟执行一次
    		schedule => "* * * * *"
    	}
@@ -355,11 +358,11 @@ docker pull docker.elastic.co/logstash/logstash:7.5.1
    		## elasticsearch 地址
    		hosts => "localhost:9200"
    		## 索引名称
-   		index => "index-name"
+   		index => "index-user"
            ## 主键
    		document_id => "%{id}"
    		## 索引类型
-   		document_type => "article"
+   		document_type => "user"
    	}
    	stdout {
    		codec => json_lines
@@ -376,7 +379,7 @@ docker pull docker.elastic.co/logstash/logstash:7.5.1
 #### 特权方式启动`Logstash`
 
 ```shell
-docker run -d --privileged=true -p 5044:5044 -p 9600:9600 -it --name=my_logstash -v /data/logstash/config/:/usr/share/logstash/config/   my_logstash
+docker run -d --privileged=true -p 4560:4560 -p 9600:9600 -it --name=my_logstash -v /data/logstash/config/:/usr/share/logstash/config/   my_logstash
 ```
 
 查看日志：
