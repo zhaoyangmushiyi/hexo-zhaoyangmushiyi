@@ -28,7 +28,7 @@ ELK也可以配合[Beats](https://www.elastic.co/cn/products/beats)进行使用�
 
 <!-- more -->
 
-本次教程基于上述两片教程的拓展。
+本次教程基于上述两篇教程拓展。
 
 ### 项目修改
 
@@ -152,4 +152,4 @@ output {
 
 选择时间筛选字段名称为`@timestamp`
 
-![Spring-Boot使用ELK收集日志-3](/images/Spring-Boot使用ELK收集日志-3.png)
+![Spring-Boot使用ELK收集日志-4](/images/Spring-Boot使用ELK收集日志-4.png)
