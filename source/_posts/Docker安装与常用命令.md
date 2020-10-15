@@ -107,15 +107,39 @@ sudo sh get-docker.sh
 ## Windows(docker for windows)
 ### 系统要求
 
-　　Windows 10 Professional 或 Windows 10 Enterprise X64
+　　Windows 10 Professional 或 Windows 10 Enterprise X64 或Windows Home 10(Version 2004 or later，Windows Home can only run the WSL 2 backend)
 
-　　对于Win 7，可使用Docker Toolbox（不建议使用）
+　　对于Win 7 or 低版本Windows 10 Home，可使用Docker Toolbox（不建议使用）
 ### 安装步骤
 　　前往[Docker for Windows 10](https://hub.docker.com/editions/community/docker-ce-desktop-windows)，下载安装包，双击即可安装。
+
+#### 配置Table自动补全
+
+1. 启动一个的PowerShell（即以管理员身份运行）。搜索PowerShell，右键单击，然后选择以管理员身份运行。在PowerShell提示符下键入： 
+
+   ```shell
+   Set-ExecutionPolicy RemoteSigned
+   ```
+
+2. 检查策略设置是否正确，运行：`get-executionpolicy` ，应该返回RemoteSigned。
+
+3. 安装posh-dockerPowerShell模块以自动完成Docker命令，键入：`Install-Module posh-docker`或者，要仅为当前用户安装模块，键入： 
+
+   ```shell
+   Install-Module -Scope CurrentUser posh-docker
+   ```
+
+4. 安装完成后，只能为当前PowerShell启用自动完成功能，输入：
+
+   ```shell
+   Import-Module posh-docker
+   ```
+
 ## 配置镜像加速器
 ### 阿里云加速器
 　　注册阿里云账号后，进入[阿里云控制台](https://cr.console.aliyun.com/#/accelerator)。  
 　　针对Docker客户端版本大于 1.10.0 的用户，可以通过修改daemon配置文件`/etc/docker/daemon.json`来使用加速器：  
+
 ```
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
