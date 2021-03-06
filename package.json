@@ -9,12 +9,12 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "4.2.1"
+    "version": "5.4.0"
   },
   "dependencies": {
     "canvas-nest.js": "^2.0.4",
-    "hexo": "^4.2.1",
-    "hexo-deployer-git": "^2.1.0",
+    "hexo": "^5.4.0",
+    "hexo-deployer-git": "^3.0.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index": "^1.0.0",
@@ -24,6 +24,7 @@
     "hexo-renderer-marked": "^2.0.0",
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
-    "hexo-symbols-count-time": "^0.7.1"
+    "hexo-symbols-count-time": "^0.7.1",
+    "hexo-theme-next": "^8.2.2"
   }
 }

@@ -86,8 +86,8 @@ theme: next
 search:
   path: search.xml
   field: post
+  content: true
   format: html
-  limit: 10000
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
