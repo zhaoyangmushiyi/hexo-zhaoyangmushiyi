@@ -1,62 +1,11 @@
 ---
-title: Java面试题（二）
+title: JUC核心知识点
 date: 2021-04-20 17:00:05
 tags:
     - Java
 categories:
     - Java
 ---
-
-# JUC核心知识点
-
-- [JMM](#jmm)
-- [volatile关键字](#volatile关键字)
-  - [可见性](#可见性)
-  - [原子性](#原子性)
-  - [有序性](#有序性)
-  - [哪些地方用到过volatile？](#哪些地方用到过volatile？)
-    - [单例模式的安全问题](#单例模式的安全问题)
-- [CAS](#cas)
-  - [CAS底层原理](#cas底层原理)
-  - [CAS缺点](#cas缺点)
-- [ABA问题](#aba问题)
-  - [AtomicReference](#atomicreference)
-  - [AtomicStampedReference和ABA问题的解决](#atomicstampedreference和aba问题的解决)
-- [集合类不安全问题](#集合类不安全问题)
-  - [List](#list)
-    - [CopyOnWriteArrayList](#copyonwritearraylist)
-  - [Set](#set)
-    - [HashSet和HashMap](#hashset和hashmap)
-  - [Map](#map)
-- [Java锁](#java锁)
-  - [公平锁/非公平锁](#公平锁非公平锁)
-  - [可重入锁/递归锁](#可重入锁递归锁)
-    - [锁的配对](#锁的配对)
-  - [自旋锁](#自旋锁)
-  - [读写锁/独占/共享锁](#读写锁独占共享锁)
-  - [Synchronized和Lock的区别](#synchronized和lock的区别)
-- [CountDownLatch/CyclicBarrier/Semaphore](#countdownlatchcyclicbarriersemaphore)
-  - [CountDownLatch](#countdownlatch)
-    - [枚举类的使用](#枚举类的使用)
-  - [CyclicBarrier](#cyclicbarrier)
-  - [Semaphore](#semaphore)
-- [阻塞队列](#阻塞队列)
-  - [SynchronousQueue](#synchronousqueue)
-- [Callable接口](#callable接口)
-- [阻塞队列的应用——生产者消费者](#阻塞队列的应用生产者消费者)
-  - [传统模式](#传统模式)
-  - [阻塞队列模式](#阻塞队列模式)
-- [阻塞队列的应用——线程池](#阻塞队列的应用线程池)
-  - [线程池基本概念](#线程池基本概念)
-  - [线程池三种常用创建方式](#线程池三种常用创建方式)
-  - [线程池创建的七个参数](#线程池创建的七个参数)
-  - [线程池底层原理](#线程池底层原理)
-  - [线程池的拒绝策略](#线程池的拒绝策略)
-  - [实际生产使用哪一个线程池？](#实际生产使用哪一个线程池？)
-    - [自定义线程池参数选择](#自定义线程池参数选择)
-- [死锁编码和定位](#死锁编码和定位)
-
-<!-- more -->
 
 # JMM
 
@@ -65,6 +14,8 @@ JMM是指Java**内存模型**，不是Java**内存布局**，不是所谓的栈�
 每个Java线程都有自己的**工作内存**。操作数据，首先从主内存中读，得到一份拷贝，操作完毕后再写回到主内存。
 
 ![threadPoolProcedure](/images/Java面试题（二）/JMM.png)JMM可能带来**可见性**、**原子性**和**有序性**问题。所谓可见性，就是某个线程对主内存内容的更改，应该立刻通知到其它线程。原子性是指一个操作是不可分割的，不能执行到一半，就不执行了。所谓有序性，就是指令是有序的，不会被重排。
+
+<!-- more -->
 
 # volatile关键字
 
@@ -76,7 +27,7 @@ JMM是指Java**内存模型**，不是Java**内存布局**，不是所谓的栈�
 
 ```java
 class MyData{
-    int number=0;
+    int number = 0;
     //volatile int number=0;
 
     AtomicInteger atomicInteger=new AtomicInteger();
@@ -97,7 +48,7 @@ class MyData{
 //volatile可以保证可见性，及时通知其它线程主物理内存的值已被修改
 private static void volatileVisibilityDemo() {
     System.out.println("可见性测试");
-    MyData myData=new MyData();//资源类
+    MyData myData = new MyData();//资源类
     //启动一个线程操作共享数据
     new Thread(()->{
         System.out.println(Thread.currentThread().getName()+"\t come in");
@@ -111,7 +62,7 @@ private static void volatileVisibilityDemo() {
 }
 ```
 
-`MyData`类是资源类，一开始number变量没有用volatile修饰，所以程序运行的结果是：
+`MyData`类是资源类，一开始`number`变量没有用`volatile`修饰，所以程序运行的结果是：
 
 ```java
 可见性测试
@@ -119,9 +70,9 @@ AAA	 come in
 AAA	 update number value: 60
 ```
 
-虽然一个线程把number修改成了60，但是main线程持有的仍然是最开始的0，所以一直循环，程序不会结束。
+虽然一个线程把`number`修改成了60，但是`main`线程持有的仍然是最开始的0，所以一直循环，程序不会结束。
 
-如果对number添加了volatile修饰，运行结果是：
+如果对`number`添加了`volatile`修饰，运行结果是：
 
 ```java
 AAA	 come in
@@ -129,11 +80,11 @@ AAA	 update number value: 60
 main	 mission is over. main get number value: 60
 ```
 
-可见某个线程对number的修改，会立刻反映到主内存上。
+可见某个线程对`number`的修改，会立刻反映到主内存上。
 
 ## 原子性
 
-volatile并**不能保证操作的原子性**。这是因为，比如一条number++的操作，会形成3条指令。
+`volatile`并**不能保证操作的原子性**。这是因为，比如一条number++的操作，会形成3条指令。
 
 ```assembly
 getfield        //读
@@ -884,26 +835,42 @@ public class SynchronousQueueDemo {
 **Callable接口的使用**：
 
 ```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+/**
+ * @author Monochrome
+ * @date 2021/5/29
+ */
 public class CallableDemo {
-    //实现Callable接口
-    class MyThread implements Callable<Integer> {
-        @Override
-        public Integer call() throws Exception {
-            System.out.println("callable come in ...");
-            return 1024;
-        }
+
+    public static void main(String[] args) {
+        FutureTask<Integer> futureTask = new FutureTask<>(() -> {
+            System.out.println("come in callable");
+            return 1234;
+        });
+        
+        FutureTask<Integer> futureTask2 = new FutureTask<>(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                System.out.println("come in callable");
+                return 1234;
+            }
+        });
+
+        FutureTask<Integer> futureTask3 = new FutureTask<Integer>(() -> System.out.println("come in runnable"), 1024);
+
+        FutureTask<Integer> futureTask4 = new FutureTask<Integer>(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("come in runnable");
+            }
+        }, 1024);
+        
+        Thread t1 = new Thread(futureTask, "AAA");
+        t1.start();
     }
-    
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        //创建FutureTask类，接受MyThread。    
-        FutureTask<Integer> futureTask = new FutureTask<>(new MyThread());
-        //将FutureTask对象放到Thread类的构造器里面。
-        new Thread(futureTask, "AA").start();
-        int result01 = 100;
-        //用FutureTask的get方法得到返回值。
-        int result02 = futureTask.get();
-        System.out.println("result=" + (result01 + result02));
-    }
+
 }
 ```
 
@@ -1126,6 +1093,39 @@ class MyResource {
 
 ## 线程池三种常用创建方式
 
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author Monochrome
+ * @date 2021/5/29
+ */
+public class ThreadPoolDemo {
+
+    public static void main(String[] args) {
+//        ExecutorService threadPool = Executors.newFixedThreadPool(5);//一池5个处理线程       执行一个长期的任务，性能好很多
+//        ExecutorService threadPool = Executors.newSingleThreadExecutor();//一池1个处理线程   一个任务一个线程执行的任务场景
+        ExecutorService threadPool = Executors.newCachedThreadPool();//一池N个处理线程         执行很多短期异步的小程序或者负载较轻的服务器
+        //模拟10个用户来办理业务，每个用户就是一个来自外部的请求线程
+        try {
+            for (int i = 1; i <= 10; i++) {
+                threadPool.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "\t办理业务");
+                });
+                TimeUnit.MICROSECONDS.sleep(200);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            threadPool.shutdown();
+        }
+    }
+}
+
+```
+
 **newFixedThreadPool**：使用`LinkedBlockingQueue`实现，定长线程池。
 
 ```java
@@ -1172,15 +1172,32 @@ public static ExecutorService newCachedThreadPool() {
 
 `corePoolSize`就像银行的“**当值窗口**“，比如今天有**2位柜员**在受理**客户请求**（任务）。如果超过2个客户，那么新的客户就会在**等候区**（等待队列`workQueue`）等待。当**等候区**也满了，这个时候就要开启“**加班窗口**”，让其它3位柜员来加班，此时达到**最大窗口**`maximumPoolSize`，为5个。如果开启了所有窗口，等候区依然满员，此时就应该启动”**拒绝策略**“`handler`，告诉不断涌入的客户，叫他们不要进入，已经爆满了。由于不再涌入新客户，办完事的客户增多，窗口开始空闲，这个时候就通过`keepAlivetTime`将多余的3个”加班窗口“取消，恢复到2个”当值窗口“。
 
+
+
 ## 线程池底层原理
 
 **原理图**：上面银行的例子，实际上就是线程池的工作原理。
 
-![](/images/Java面试题（二）/threadPool.png)
+![threadPool](/images/Java面试题（二）/threadPool.png)
+
+1. 在创建了线程池后，等待提交过来的任务请求。
+
+2. 当调用`execute()`方法添加一-个请求任务时，线程池会做如下判断:
+
+   1. 如果正在运行的线程数量小于`corePoolSize`，那么马上创建线程运行这个任务
+   2. 如果正在运行的线程数量大于或等于`corePoolSize`，那么将这个任务放入队列
+   3. 如果这时候队列满了且正在运行的线程数量还小于`maximumPoolSize`，那么还是要创建非核心线程**立刻运行**这个任务
+   4. 如果队列满了且正在运行的线程数量大于或等于`maximumPoolSize`，那么线程池会启动饱和拒绝策略来执行
+
+3. 当一个线程完成任务时，它会从队列中取下一个任务来执行。
+
+4. 当一个线程无事可做超过一定的时间(`keepAliveTime`) 时，线程池会判断:
+
+   ​	如果当前运行的线程数大于`corePoolSize`，那么这个线程就被停掉。
 
 **流程图**：
 
-![](/images/Java面试题（二）/threadPoolProcedure.png)
+![threadPoolProcedure](/images/Java面试题（二）/threadPoolProcedure.png)
 
 新任务到达→
 
@@ -1201,10 +1218,10 @@ public static ExecutorService newCachedThreadPool() {
 
 ## 实际生产使用哪一个线程池？
 
-**单一、可变、定长都不用**！原因就是`FixedThreadPool`和`SingleThreadExecutor`底层都是用`LinkedBlockingQueue`实现的，这个队列最大长度为`Integer.MAX_VALUE`，显然会导致OOM。所以实际生产一般自己通过`ThreadPoolExecutor`的7个参数，自定义线程池。
+**单一、可变、定长都不用**！原因就是`FixedThreadPool`和`SingleThreadExecutor`底层都是用`LinkedBlockingQueue`实现的，这个队列最大长度为`Integer.MAX_VALUE`，显然会导致OOM(Out Of Memery)。所以实际生产一般自己通过`ThreadPoolExecutor`的7个参数，自定义线程池。
 
 ```java
-ExecutorService threadPool=new ThreadPoolExecutor(2,5,
+ExecutorService threadPool = new ThreadPoolExecutor(2,5,
                         1L,TimeUnit.SECONDS,
                         new LinkedBlockingQueue<>(3),
                         Executors.defaultThreadFactory(),
@@ -1213,9 +1230,67 @@ ExecutorService threadPool=new ThreadPoolExecutor(2,5,
 
 ### 自定义线程池参数选择
 
-对于CPU密集型任务，最大线程数是CPU线程数+1。对于IO密集型任务，尽量多配点，可以是CPU线程数*2，或者CPU线程数/(1-阻塞系数)。
+查看CPU核数：`System.out.println(Runtime.getRuntime().availableProcessors());`
+
+CPU密集型：CPU密集的意思是该任务需要大量的运算，而没有阻塞，CPU一直全速运行。CPU密集型任务配置尽可能少的线程数量：一般公式: CPU核 数+1介线程的线程池。
+
+IO密集型任务：任务需要大量的IO，即大量的阻塞，因此尽量多配点，可以是CPU线程数*2，或者CPU线程数/(1-阻塞系数)。
 
 # 死锁编码和定位
+
+```java
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author Monochrome
+ * @date 2021/5/31
+ */
+public class DeadLockDemo {
+
+    public static void main(String[] args) {
+
+        String lockA = "lockA";
+        String lockB = "lockB";
+
+        new Thread(new HoldLockThread(lockA, lockB), "ThreadAAA").start();
+        new Thread(new HoldLockThread(lockB, lockA), "ThreadBBB").start();
+    }
+
+}
+
+class HoldLockThread implements Runnable {
+
+    public HoldLockThread(String lockA, String lockB) {
+        this.lockA = lockA;
+        this.lockB = lockB;
+    }
+
+    private String lockA;
+    private String lockB;
+
+    @Override
+    public void run() {
+        synchronized (lockA) {
+            System.out.println(Thread.currentThread().getName() + "\t自己持有" + lockA + "，尝试获取：" + lockB);
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            synchronized (lockB) {
+                System.out.println(Thread.currentThread().getName() + "\t自己持有" + lockB + "，尝试获取：" + lockA);
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+```
 
 主要是两个命令配合起来使用，定位死锁。
 
@@ -1229,17 +1304,19 @@ ExecutorService threadPool=new ThreadPoolExecutor(2,5,
 **jstack**指令：`jstack pid`可以查看某个Java进程的堆栈信息，同时分析出死锁。
 
 ```java
-=====================
-"Thread AAA":
-	at xxxxx
-	- waiting to lock <0x000111>
-	- locked <0x000222>
-	at java.lang.Thread.run
-"Thread BBB":
-	at xxxxx
-	- waiting to lock <0x000222>
-	- locked <0x000111>
-	at java.lang.Thread.run
+Java stack information for the threads listed above:
+===================================================
+"ThreadBBB":
+        at com.monochrome.thread.HoldLockThread.run(DeadLockDemo.java:43)
+        - waiting to lock <0x00000006edd5eae8> (a java.lang.String)
+        - locked <0x00000006edd5eb20> (a java.lang.String)
+        at java.lang.Thread.run(Thread.java:748)
+"ThreadAAA":
+        at com.monochrome.thread.HoldLockThread.run(DeadLockDemo.java:43)
+        - waiting to lock <0x00000006edd5eb20> (a java.lang.String)
+        - locked <0x00000006edd5eae8> (a java.lang.String)
+        at java.lang.Thread.run(Thread.java:748)
+
 Found 1 deadlock.
 ```
 
