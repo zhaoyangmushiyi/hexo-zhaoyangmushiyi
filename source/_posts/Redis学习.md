@@ -292,7 +292,7 @@ Redis hash是一个string类型的field和value的映射表，hash特别适合�
 
 3. 第三种，Hash
 
-   ![image-20210627212109516](/Users/monochrome/project/blog/hexo-zhaoyangmushiyi/source/images/Redis学习/Hash-store2.png)
+   ![image-20210627212109516](/images/Redis学习/Hash-store2.png)
 
    通过 `key(用户ID)` + `field(属性标签)`就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和并发修改控制的问题  
 
