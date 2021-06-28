@@ -406,3 +406,219 @@ zset底层使用了两个数据结构
 
 从此可以看出跳跃表比有序链表效率要高
 
+# **Redis的发布和订阅**
+
+## **什么是发布和订阅**
+
+Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。
+
+Redis 客户端可以订阅任意数量的频道。
+
+##  **Redis的发布和订阅**
+
+**发布订阅命令行实现**
+
+1、 打开一个客户端订阅channel1
+
+```shell
+subscribe channel1
+```
+
+![Redis发布和订阅-订阅channel1](/images/Redis学习/Redis发布和订阅-订阅channel1.png)     
+
+2、打开另一个客户端，给channel1发布消息hello
+
+```shell
+publish channel1 hello
+```
+
+ ![Redis发布和订阅-给channel1发布消息](/images/Redis学习/Redis发布和订阅-给channel1发布消息.png)
+
+返回的1是订阅者数量
+
+3、打开第一个客户端可以看到发送的消息
+
+![Redis发布和订阅-从channel1接收消息](/images/Redis学习/Redis发布和订阅-从channel1接收消息.png)
+
+注：发布的消息没有持久化，如果在订阅的客户端收不到hello，只能收到订阅后发布的消息
+
+# **Redis与Spring Boot整合**
+
+## 导入依赖
+
+```xml
+        <!--Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- spring2.X集成redis所需common-pool2-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+```
+
+## application.yml配置Redis配置
+
+```yaml
+spring:
+	redis:
+    host: 127.0.0.1 #Redis服务器地址
+    port: 6379 #Redis服务器连接端口
+    database: 0 #Redis数据库索引（默认为0）
+    timeout: 18000000 #连接超时时间（毫秒）
+    lettuce:
+      pool:
+        max-active: 20 #连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1 #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5 #连接池中的最大空闲连接
+        min-idle: 0 #连接池中的最小空闲连接
+```
+
+## 添加redis配置类
+
+```java
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
+
+@Configuration
+@EnableCaching
+public class RedisConfig {
+    @Bean
+    @ConditionalOnMissingBean(name = "redisTemplate")//我们可以自定义一个RedisTemplate来替换默认的
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
+
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        serializer.setObjectMapper(mapper);
+
+        // 使用StringRedisSerializer来序列化和反序列化redis的key值
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(serializer);
+
+        // Hash的key也采用StringRedisSerializer的序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(serializer);
+
+        template.afterPropertiesSet();
+        return template;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean//由于String是redis中最常使用的类型，所以单独提出了一个bean!
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        StringRedisTemplate template = new StringRedisTemplate();
+        template.setConnectionFactory(redisConnectionFactory);
+        return template;
+    }
+
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
+        RedisSerializer<String> redisSerializer = new StringRedisSerializer();
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        //解决查询缓存转换异常的问题
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        jackson2JsonRedisSerializer.setObjectMapper(mapper);
+        // 配置序列化（解决乱码的问题）,过期时间600秒
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofSeconds(600))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
+                .disableCachingNullValues();
+        RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .build();
+        return cacheManager;
+    }
+
+}
+
+```
+
+## **完成一个手机验证码功能**
+
+要求：
+
+1. 输入手机号，点击发送后随机生成6位数字码，30分钟有效
+
+   用Random类
+
+2. 输入验证码，点击验证，返回成功或失败
+
+   把验证码放到Redis里面，设置过期时间为30分钟
+
+3. 每个手机号每天只能输入3次
+
+   把发送验证码的数量也放到Redis里面，设置过期时间为1天
+
+   incr每次发送后+1
+
+   大于2(也就是已经发送3次后)不能再发送
+
+```java
+
+    public String getVerificationCode(String phone) {
+        String verifyCodeCountKey = "verifyCode" + phone + ":count";
+        String verifyCodeKey = "verifyCode" + phone + ":code";
+        String count = redisTemplate.opsForValue().get(verifyCodeCountKey);
+        if (count == null) {
+            redisTemplate.opsForValue().set(verifyCodeCountKey, "1", 1, TimeUnit.DAYS);
+        } else if (Integer.parseInt(count) <= 2) {
+            redisTemplate.opsForValue().increment(verifyCodeCountKey);
+        } else {
+            return "今天输入次数已超过3次！";
+        }
+        String verificationCode = getRandomVerificationCode();
+        log.info(verifyCodeKey + "------" + verificationCode);
+        redisTemplate.opsForValue().set(verifyCodeKey, verificationCode, 30, TimeUnit.MINUTES);
+        return "验证码已发送到手机，请尽快输入，验证码将于30分钟后失效！";
+    }
+
+    @Override
+    public String verifyPhoneAndVerificationCode(String phone, String verificationCode) {
+
+        String verifyCodeKey = "verifyCode" + phone + ":code";
+        String verifyCodeKeyByRedis = redisTemplate.opsForValue().get(verifyCodeKey);
+        if (verificationCode.equals(verifyCodeKeyByRedis)) {
+            return "验证成功";
+        }
+        return "验证失败！";
+    }
+
+    private String getRandomVerificationCode() {
+        StringBuilder verificationCode = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            verificationCode.append(new Random().nextInt(10));
+        }
+        return verificationCode.toString();
+    }
+```
+
